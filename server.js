@@ -62,16 +62,18 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     let rooms = null;
-
-     rooms.forEach(r => {
-       r.players.forEach(p => {
-         if(p.socketId === socket.id && p.host){
-           room = r
-           rooms = rooms.filter(r => r !== room)
-         }
-       })
-     });
-   });
+    if (rooms) {
+      rooms.forEach(r => {
+        r.players.forEach(p => {
+          if(p.socketId === socket.id && p.host){
+            room = r
+            rooms = rooms.filter(r => r !== room)
+          }
+        })
+      });
+    }
+  }) 
+    
   })
 
   function createRoom(player) {
